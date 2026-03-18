@@ -23,7 +23,17 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
+# Project info folder
 /.info
+
+# Laravel boost generated files
+/.ai
+/.claude
+/.junie
+.mcp.json
+AGENTS.md
+boost.json
+CLAUDE.md
 
 # Project exclude paths
 /storage/app/
