@@ -1,0 +1,240 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --animate-fade-out: fade-out 4s ease-in-out forwards;
+
+    @keyframes fade-out {
+
+        0%,
+        70% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+}
+
+/* CHIRPER CUSTOM LARAVEL THEME */
+:root:has(input.theme-controller[value=laravelChirper]:checked),
+[data-theme="laravelChirper"] {
+    color-scheme: light;
+
+    /* Canvas */
+    --color-base-50: #fafafa;
+    --color-base-100: #f7f7f8;
+    --color-base-200: #ededee;
+    --color-base-300: #e0e1e3;
+    --color-base-content: #1a1a1c;
+
+    /* Text tones */
+    --color-text-primary: var(--color-base-content);
+    --color-text-muted: color-mix(in oklab, var(--color-base-content) 64%, transparent);
+
+    /* Brand / actions */
+    --color-primary: #5580d2;
+    --color-primary-content: #ffffff;
+    --color-secondary: #2f3136;
+    --color-secondary-content: #ffffff;
+
+    /* Borders / elevation */
+    --border: 1px;
+    --border-color-soft: rgba(0, 0, 0, 0.08);
+    --color-input-bg: var(--color-base-50);
+    --color-btn-ghost-hover: rgba(0, 0, 0, 0.03);
+
+    /* Radius */
+    --radius-sm: 5px;
+    --radius-field: 8px;
+    --radius-box: 10px;
+    --radius-selector: var(--radius-sm);
+
+    /* Status colours */
+    --color-success: #598b6e;
+    --color-success-content: #ffffff;
+
+    --depth: 1;
+    --noise: 0;
+}
+
+/* Page base text */
+html[data-theme="laravelChirper"],
+:root:has(input.theme-controller[value=laravelChirper]:checked) body {
+    color: var(--color-text-primary);
+}
+
+/* Navbar */
+.navbar {
+    background: color-mix(in oklab, var(--color-base-100) 85%, transparent);
+    border-bottom: var(--border) solid var(--border-color-soft);
+    backdrop-filter: saturate(140%) blur(6px);
+}
+
+/* Cards */
+:where(.card) {
+    background: var(--color-base-100);
+    color: var(--color-text-primary);
+    border-radius: var(--radius-box);
+    border: var(--border) solid var(--border-color-soft);
+    box-shadow: none;
+    transition: none;
+}
+
+:where(.card:hover),
+:where(.card.shadow),
+:where(.card.shadow:hover) {
+    box-shadow: none;
+}
+
+:where(.card .card-body) {
+    padding: .875rem .875rem 1.125rem;
+}
+
+/* Inputs / Textareas */
+:where(.input, .textarea) {
+    border-radius: var(--radius-field);
+    border: var(--border) solid var(--border-color-soft);
+    background: var(--color-input-bg);
+}
+
+:where(.textarea) {
+    padding: .625rem .75rem;
+}
+
+.card :where(.textarea) {
+    padding: .5625rem .75rem;
+}
+
+:where(.input:focus, .textarea:focus) {
+    outline: 2px solid color-mix(in oklab, var(--color-primary) 25%, transparent);
+    outline-offset: 2px;
+}
+
+/* Links */
+a:not(.btn) {
+    color: var(--color-primary);
+}
+
+a:not(.btn):hover {
+    color: color-mix(in oklab, var(--color-primary) 80%, black);
+}
+
+/* Anchor-buttons keep button colours in all states */
+a.btn,
+a.btn:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+a.btn-primary,
+a.btn-primary:visited {
+    color: var(--color-primary-content);
+}
+
+/* Buttons */
+:where(.btn) {
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding-inline: 1rem;
+}
+
+:where(.btn-primary),
+:where(a.btn-primary) {
+    background: var(--color-primary);
+    color: var(--color-primary-content);
+    border: none;
+}
+
+:where(.btn-primary:hover),
+:where(a.btn-primary:hover) {
+    background: color-mix(in oklab, var(--color-primary) 85%, black);
+}
+
+:where(.btn-ghost),
+:where(a.btn-ghost),
+:where(a.btn-ghost:visited),
+:where(a.btn-ghost:hover) {
+    color: var(--color-text-primary);
+    border: var(--border) solid var(--border-color-soft);
+    background: transparent;
+}
+
+:where(.btn-ghost:hover),
+:where(a.btn-ghost:hover) {
+    background: var(--color-btn-ghost-hover);
+}
+
+:where(.btn-ghost.btn-error) {
+    color: var(--color-error);
+    border-color: var(--border-color-soft);
+}
+
+:where(.btn-ghost.btn-error:hover) {
+    background: color-mix(in oklab, var(--color-error) 8%, transparent);
+}
+
+:where(.btn-sm) {
+    height: 2rem;
+    min-height: 2rem;
+    padding-inline: .75rem;
+}
+
+:where(.btn-xs) {
+    height: 1.5rem;
+    min-height: 1.5rem;
+    padding-inline: .5rem;
+    font-size: .75rem;
+}
+
+/* Toast */
+:where(.toast .alert-success) {
+    background: var(--color-success);
+    color: var(--color-success-content);
+    border: var(--border) solid var(--border-color-soft);
+}
+
+/* link-primary utility */
+:where(.link-primary) {
+    color: var(--color-primary);
+}
+
+:where(.link-primary:hover) {
+    color: color-mix(in oklab, var(--color-primary) 85%, black);
+}
+
+/* Muted text (timestamps, separators) */
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+/* Footer */
+footer.footer {
+    color: var(--color-text-muted);
+}
+
+/* Auth inputs full width inside cards/labels */
+.card .input,
+.card .textarea,
+.floating-label > input,
+.floating-label > .input,
+.floating-label > .textarea {
+    width: 100%;
+}
+
+/* Headings */
+:where(h1, h2, h3, h4, h5, h6) {
+    font-weight: 400;
+}
