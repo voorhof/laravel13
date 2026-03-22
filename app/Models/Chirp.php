@@ -17,8 +17,6 @@ class Chirp extends Model
 
     /**
      * Get the User that owns the Chirp.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {

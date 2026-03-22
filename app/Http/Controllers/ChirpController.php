@@ -22,9 +22,9 @@ class ChirpController extends Controller
         Gate::authorize('view-any', Chirp::class);
 
         $chirps = Chirp::with('user') // Eager load the user relationship
-        ->latest() // order by created_at, newest first
-        ->take(25) // Limit to 25 most recent chirps
-        ->get();
+            ->latest() // order by created_at, newest first
+            ->take(25) // Limit to 25 most recent chirps
+            ->get();
 
         return view('chirper.index', compact('chirps'));
     }
