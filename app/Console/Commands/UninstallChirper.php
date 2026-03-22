@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Chirp;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -19,7 +18,7 @@ class UninstallChirper extends Command
         $this->info('Starting Chirper uninstallation...');
 
         // 1. Delete Chirps from the database
-        if (class_exists(Chirp::class)) {
+        if (file_exists(app_path('Models/Chirp.php'))) {
             $this->call('chirper:delete-chirps');
         }
 
@@ -119,12 +118,23 @@ class UninstallChirper extends Command
         if (file_exists($userPhp)) {
             $content = file_get_contents($userPhp);
             // Remove the relationship and its comment
-            $newContent = preg_replace("/\s+\/\*\*\s+\* Get the Chirps for the User\.\s+\*\/\s+public function chirps\(\): HasMany\s+\{\s+return \$this->hasMany\(Chirp::class\);\s+\}/s", '', $content);
+            $pattern = "/\s+\/\*\*\s+\* Get the Chirps for the User\.\s+\*\/\s+public function chirps\(\): HasMany\s+\{\s+return \\\$this->hasMany\(Chirp::class\);\s+\}/s";
+            if (preg_match($pattern, $content)) {
+                $newContent = preg_replace($pattern, '', $content);
+                $this->line('Removed relationship from App\Models\User');
+            } else {
+                $this->error('Could not find relationship in App\Models\User');
+                $newContent = $content;
+            }
+
             // Remove import if exists
-            // Since it might not be explicitly imported (same namespace), but it's good to check for HasMany if it's ONLY used for chirps.
-            // But User likely uses other things.
+            $importPattern = "/use Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany;\r?\n/";
+            if (preg_match($importPattern, $newContent)) {
+                $newContent = preg_replace($importPattern, '', $newContent);
+                $this->line('Removed HasMany import from App\Models\User');
+            }
+
             file_put_contents($userPhp, $newContent);
-            $this->line('Removed reference from App\Models\User');
         }
 
         // 3. vite.config.js
