@@ -87,7 +87,7 @@ class UninstallChirper extends Command
         }
 
         foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') {
+            if ($item === '.' || $item === '..') {
                 continue;
             }
 
