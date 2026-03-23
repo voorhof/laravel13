@@ -1,58 +1,98 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Laravel 13 - Starter template
 
-## About Laravel
+A go-to starter kit for Laravel 13 projects. This includes **Filament** for the admin panel, **Chirper** example from the Laravel Bootcamp,... 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+All have close to default settings, and each component can be removed with extra provided artisan commands.  
+If you wish to remove a component, please do so as early as possible in the development process.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- `php artisan chirper:uninstall`
+- xxx
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requirements
 
-## Learning Laravel
+- **PHP** 8.3+
+- **Composer**
+- **Node.js** & **NPM**
+- **[Laravel Herd](https://herd.laravel.com)** (Recommended)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To get started with this starter template, follow these steps:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/voorhof/laravel13.git
+   cd laravel13
+   ```
 
-## Agentic Development
+2. **Run the setup command:**
+   You can use the built-in setup script to handle the initial configuration:
+   ```bash
+   composer run setup
+   ```
+   This script will:
+   - Install PHP dependencies.
+   - Create your `.env` file from `.env.example`. _(default values have been commented out)_
+   - Generate an application key.
+   - Run database migrations (using SQLite by default).
+   - Install NPM dependencies.
+   - Build frontend assets.  
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+3. **(Optional) Seed the database:**
+   To create a default test user (`test@example.com` / `password`):
+   ```bash
+   php artisan db:seed
+   ```
+
+4. **Serve the application:**
+   Since this project is optimized for **Laravel Herd**, it is automatically available at:
+   `https://laravel13.test`
+
+   If you're not using Herd, you can use the development command:
+   ```bash
+   composer run dev
+   ```
+   This will concurrently start the PHP server, the queue listener, and the Vite development server.
+
+## User model
+
+The User model was given the SoftDeletes trait and the deleted_at timestamp added to its migration file.
+
+## Filament
+
+Filament is included,...
+
+## Chirper
+
+This project includes the "Getting Started with Laravel" bootcamp course from [Laravel Learn](https://laravel.com/learn/).
+
+Chirper is a simple microblogging application built as part of the Laravel Bootcamp. It is an example implementation with features like soft deletes, named routes, and custom folder structures to keep it separate from the main application.
+
+For more information on the implementation, database seeding, and removal instructions, please refer to the [CHIRPER.md](CHIRPER.md) file.
+
+## AI
+
+**Laravel Boost** is included, and this line is added inside post-update-cm to composer.json:   
+`@php artisan boost:update --ansi`  
+This will regenerate the Laravel Boost resources.  
+https://laravel.com/docs/13.x/boost#keeping-boost-resources-updated
+
+## Testing
+
+This project uses [Pest PHP](https://pestphp.com) for testing. To run the full test suite, use:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer run test
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Or run tests directly with Artisan:
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan test
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Laravel 13 Starter template is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
