@@ -74,6 +74,18 @@ it('stores a chirp when message is exactly 255 characters', function () {
     $this->assertDatabaseHas('chirps', ['user_id' => $user->id, 'message' => $message]);
 });
 
+it('updates a chirp when message is exactly 255 characters', function () {
+    $user = User::factory()->create();
+    $chirp = Chirp::factory()->for($user)->create();
+    $message = str_repeat('b', 255);
+
+    $this->actingAs($user)
+        ->patch(route('chirps.update', $chirp), ['message' => $message])
+        ->assertRedirect(route('chirps.index'));
+
+    $this->assertDatabaseHas('chirps', ['id' => $chirp->id, 'message' => $message]);
+});
+
 // -----------------------------------------------------------------------
 // Show
 // -----------------------------------------------------------------------

@@ -42,6 +42,10 @@ class UninstallChirper extends Command
 
             // routes folder
             base_path('routes/chirper.php'),
+
+            // tests folder
+            base_path('tests/Unit/ChirpTest.php'),
+            base_path('tests/Unit/ChirpPolicyTest.php'),
         ];
 
         foreach ($filesToDelete as $file) {
@@ -67,6 +71,7 @@ class UninstallChirper extends Command
 
         // 3. Remove references to Chirp from remaining app files
         $this->removeReferences();
+        $this->cleanupTests();
 
         $this->info('Chirper has been successfully uninstalled!');
         $this->warn('Please run "npm run build" to update your assets.');
@@ -144,6 +149,39 @@ class UninstallChirper extends Command
             $newContent = preg_replace("/\s+'resources\/css\/chirper\.css',\s+\/\/ Chirper example/", '', $content);
             file_put_contents($viteConfig, $newContent);
             $this->line('Removed reference from vite.config.js');
+        }
+    }
+
+    /**
+     * Revert tests/Pest.php and clean up tests/Unit/UserTest.php.
+     */
+    private function cleanupTests(): void
+    {
+        // 1. Pest.php
+        $pestPhp = base_path('tests/Pest.php');
+        if (file_exists($pestPhp)) {
+            $content = file_get_contents($pestPhp);
+            $newContent = str_replace("->in('Feature', 'Unit')", "->in('Feature')", $content);
+            if ($newContent !== $content) {
+                file_put_contents($pestPhp, $newContent);
+                $this->line('Reverted tests/Pest.php to only include Feature directory');
+            }
+        }
+
+        // 2. UserTest.php
+        $userTestPhp = base_path('tests/Unit/UserTest.php');
+        if (file_exists($userTestPhp)) {
+            $content = file_get_contents($userTestPhp);
+
+            // Remove the Chirp import
+            $content = preg_replace("/use App\\\\Models\\\\Chirp;\r?\n/", '', $content);
+
+            // Remove the "a user has many chirps" test
+            $testPattern = "/test\('a user has many chirps', function \(\) \{[\s\S]*?}\);\r?\n?\r?\n?/";
+            $content = preg_replace($testPattern, '', $content);
+
+            file_put_contents($userTestPhp, $content);
+            $this->line('Removed Chirp test from tests/Unit/UserTest.php');
         }
     }
 }

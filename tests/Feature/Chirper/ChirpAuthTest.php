@@ -51,6 +51,15 @@ it('fails registration when email is invalid', function () {
     ])->assertSessionHasErrors('email');
 });
 
+it('fails registration when name is too long', function () {
+    $this->post(route('chirps.register.post'), [
+        'name' => str_repeat('a', 256),
+        'email' => 'test@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ])->assertSessionHasErrors('name');
+});
+
 it('fails registration when email is already taken', function () {
     User::factory()->create(['email' => 'taken@example.com']);
 
@@ -113,6 +122,15 @@ it('fails login with wrong password', function () {
     $this->post(route('chirps.login.post'), [
         'email' => $user->email,
         'password' => 'wrong-password',
+    ])->assertSessionHasErrors('email');
+
+    $this->assertGuest();
+});
+
+it('fails login when user does not exist', function () {
+    $this->post(route('chirps.login.post'), [
+        'email' => 'not@exists.com',
+        'password' => 'password',
     ])->assertSessionHasErrors('email');
 
     $this->assertGuest();
