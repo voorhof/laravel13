@@ -118,7 +118,7 @@ class UninstallChirper extends Command
         if (file_exists($userPhp)) {
             $content = file_get_contents($userPhp);
             // Remove the relationship and its comment
-            $pattern = "/\s+\/\*\*\s+\* Get the Chirps for the User\.\s+\*\/\s+public function chirps\(\): HasMany\s+\{\s+return \\\$this->hasMany\(Chirp::class\);\s+\}/s";
+            $pattern = "/\s+\/\*\*\s+\* Get the Chirps for the User\.\s+\*\/\s+public function chirps\(\): HasMany\s+\{\s+return \\\$this->hasMany\(Chirp::class\);\s+}/";
             if (preg_match($pattern, $content)) {
                 $newContent = preg_replace($pattern, '', $content);
                 $this->line('Removed relationship from App\Models\User');
