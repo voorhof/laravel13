@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users\Schemas;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Operation;
 
 class UserForm
 {
@@ -13,15 +14,27 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->maxLength(255)
+                    ->autofocus(function ($operation): bool {
+                        // Only autofocus the first field on creation, not on the edit page.
+                        return $operation === Operation::Create->value;
+                    }),
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
+                    ->unique()
+                    ->required()
+                    ->maxLength(255)
+                    ->autocomplete(false),
+                DateTimePicker::make('email_verified_at')
+                    ->columnSpanFull(),
                 TextInput::make('password')
                     ->password()
-                    ->required(),
+                    ->required()
+                    ->maxLength(255)
+                    ->hiddenOn(Operation::Edit)
+                    ->autocomplete('new-password'),
             ]);
     }
 }
