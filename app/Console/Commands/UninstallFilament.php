@@ -38,6 +38,7 @@ class UninstallFilament extends Command
             public_path('css/filament'),
             public_path('fonts/filament'),
             public_path('js/filament'),
+            base_path('tests/Feature/Filament'),
         ];
 
         foreach ($directoriesToDelete as $dir) {
