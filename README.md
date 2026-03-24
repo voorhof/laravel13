@@ -2,13 +2,13 @@
 
 # Laravel 13 - Starter template
 
-A go-to starter kit for Laravel 13 projects. This includes **Filament** for the admin panel, **Chirper** example from the Laravel Bootcamp,... 
+A go-to starter kit for Laravel 13 projects. This includes a **Filament** admin panel, **Chirper** example from the Laravel Bootcamp,... 
 
-All have close to default settings, and each component can be removed with extra provided artisan commands.  
+All these pre-installed features have default settings, and each component can be removed with extra provided artisan commands.  
 If you wish to remove a component, please do so as early as possible in the development process.
 
 - `php artisan chirper:uninstall`
-- xxx
+- `php artisan filament:uninstall`
 
 ## Requirements
 
@@ -62,7 +62,10 @@ The User model was given the SoftDeletes trait and the deleted_at timestamp adde
 
 ## Filament
 
-Filament is included,...
+[Filament](https://filamentphp.com/) is installed, and a basic admin panel configured, available at /admin URL.
+
+For more information on the implementation, and optional removal instructions, please read documentation inside [FILAMENT.md](FILAMENT.md).
+
 
 ## Chirper
 
