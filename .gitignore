@@ -35,6 +35,11 @@ AGENTS.md
 boost.json
 CLAUDE.md
 
+# Filament resources
+/public/css/filament/
+/public/fonts/filament/
+/public/js/filament/
+
 # Project exclude paths
 /storage/app/
 /storage/framework/
