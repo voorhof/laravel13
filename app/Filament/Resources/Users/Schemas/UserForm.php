@@ -27,8 +27,6 @@ class UserForm
                     ->required()
                     ->maxLength(255)
                     ->autocomplete(false),
-                DateTimePicker::make('email_verified_at')
-                    ->columnSpanFull(),
                 TextInput::make('password')
                     ->password()
                     ->required()
