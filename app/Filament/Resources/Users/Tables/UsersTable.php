@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Models\Role;
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -27,6 +29,19 @@ class UsersTable
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
+                TextColumn::make('roles.name')
+                    ->label('Role')
+                    ->badge()
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        return $query->orderBy(
+                            Role::select('roles.name')
+                                ->join('model_has_roles', 'model_has_roles.role_id', '=', 'roles.id')
+                                ->whereColumn('model_has_roles.model_id', 'users.id')
+                                ->where('model_has_roles.model_type', User::class)
+                                ->limit(1),
+                            $direction,
+                        );
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
