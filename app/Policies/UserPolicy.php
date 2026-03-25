@@ -13,7 +13,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('read users');
     }
 
     /**
@@ -21,7 +21,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return true;
+        return $user->can('read users');
     }
 
     /**
@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('create users');
     }
 
     /**
@@ -37,7 +37,15 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return true;
+        if ($model->hasRole('Super Admin')) {
+            return $user->hasRole('Super Admin');
+        }
+
+        if ($model->hasRole('Admin')) {
+            return $user->hasAnyRole(['Super Admin', 'Admin']);
+        }
+
+        return $user->can('update users');
     }
 
     /**
@@ -45,7 +53,15 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return true;
+        if ($model->hasRole('Super Admin')) {
+            return $user->hasRole('Super Admin');
+        }
+
+        if ($model->hasRole('Admin')) {
+            return $user->hasAnyRole(['Super Admin', 'Admin']);
+        }
+
+        return $user->can('delete users');
     }
 
     /**
@@ -53,7 +69,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return true;
+        return $this->delete($user, $model);
     }
 
     /**
@@ -61,6 +77,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return true;
+        return $this->delete($user, $model);
     }
 }

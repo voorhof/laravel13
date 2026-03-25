@@ -37,7 +37,7 @@ class UserForm
                     ->relationship('roles', 'name')
                     ->label('Choose role')
                     ->disableOptionWhen(fn (string $label): bool => $label === 'Super Admin')
-                    ->visible(fn (): bool => auth()->user()->can('update roles')),
+                    ->visible(fn (): bool => auth()->check() && auth()->user()->can('update roles')),
             ]);
     }
 }

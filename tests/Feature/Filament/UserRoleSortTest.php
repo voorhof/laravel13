@@ -3,6 +3,7 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Filament\Facades\Filament;
@@ -16,10 +17,13 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     Filament::setCurrentPanel(Filament::getPanel('admin'));
     Filament::bootCurrentPanel();
+
+    Permission::firstOrCreate(['name' => 'read users']);
 });
 
 it('can sort users by role name', function () {
     $user = User::factory()->create(['name' => 'Admin User']);
+    $user->givePermissionTo('read users');
 
     $roleA = Role::create(['name' => 'Alpha']);
     $roleZ = Role::create(['name' => 'Zeta']);
