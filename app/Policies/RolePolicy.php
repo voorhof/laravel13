@@ -14,7 +14,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('read roles');
     }
 
     /**
@@ -22,7 +22,11 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return true;
+        if ($role->name === 'Super Admin') {
+            return false;
+        }
+
+        return $user->can('read roles');
     }
 
     /**
@@ -30,7 +34,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('create roles');
     }
 
     /**
@@ -38,7 +42,15 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return false;
+        if ($role->name === 'Super Admin') {
+            return false;
+        }
+
+        if ($role->name === 'Admin') {
+            return $user->hasAnyRole(['Super Admin', 'Admin']);
+        }
+
+        return $user->can('update roles');
     }
 
     /**
@@ -46,6 +58,14 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return false;
+        if ($role->name === 'Super Admin') {
+            return false;
+        }
+
+        if ($role->name === 'Admin') {
+            return $user->hasAnyRole(['Super Admin', 'Admin']);
+        }
+
+        return $user->can('delete roles');
     }
 }

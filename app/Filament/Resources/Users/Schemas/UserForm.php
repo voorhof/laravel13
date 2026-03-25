@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Operation;
@@ -32,6 +33,11 @@ class UserForm
                     ->maxLength(255)
                     ->hiddenOn(Operation::Edit)
                     ->autocomplete('new-password'),
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->label('Choose role')
+                    ->disableOptionWhen(fn (string $label): bool => $label === 'Super Admin')
+                    ->visible(fn (): bool => auth()->check() && auth()->user()->can('update roles')),
             ]);
     }
 }

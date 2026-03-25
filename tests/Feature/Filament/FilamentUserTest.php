@@ -3,6 +3,8 @@
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Filament\Auth\Pages\Login;
 use Filament\Facades\Filament;
@@ -19,6 +21,13 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     Filament::setCurrentPanel(Filament::getPanel('admin'));
     Filament::bootCurrentPanel();
+
+    // Create roles and permissions
+    Role::firstOrCreate(['name' => 'Super Admin']);
+    Permission::firstOrCreate(['name' => 'read users']);
+    Permission::firstOrCreate(['name' => 'create users']);
+    Permission::firstOrCreate(['name' => 'update users']);
+    Permission::firstOrCreate(['name' => 'delete users']);
 });
 
 it('redirects guest users to the login page', function () {
@@ -28,6 +37,7 @@ it('redirects guest users to the login page', function () {
 
 it('can access the admin dashboard when authenticated', function () {
     $user = User::factory()->create();
+    $user->assignRole('Super Admin');
 
     actingAs($user)
         ->get('/admin')
@@ -45,6 +55,7 @@ it('can login through the admin panel login page', function () {
     $user = User::factory()->create([
         'password' => bcrypt('password'),
     ]);
+    $user->assignRole('Super Admin');
 
     livewire(Login::class)
         ->fillForm([
@@ -69,6 +80,7 @@ it('can logout of the admin panel', function () {
 
 it('can list users', function () {
     $user = User::factory()->create();
+    $user->givePermissionTo('read users');
     $users = User::factory()->count(5)->create();
 
     actingAs($user);
@@ -80,6 +92,7 @@ it('can list users', function () {
 
 it('can create a user', function () {
     $user = User::factory()->create();
+    $user->assignRole('Super Admin');
     actingAs($user);
 
     $newUserData = User::factory()->make();
@@ -101,6 +114,7 @@ it('can create a user', function () {
 
 it('can edit a user', function () {
     $user = User::factory()->create();
+    $user->assignRole('Super Admin');
     actingAs($user);
 
     $targetUser = User::factory()->create();
@@ -121,6 +135,7 @@ it('can edit a user', function () {
 
 it('can delete a user', function () {
     $user = User::factory()->create();
+    $user->assignRole('Super Admin');
     actingAs($user);
 
     $targetUser = User::factory()->create();
@@ -135,6 +150,7 @@ it('can delete a user', function () {
 
 it('can search for users in the table', function () {
     $user = User::factory()->create(['name' => 'Searchable User']);
+    $user->givePermissionTo('read users');
     $otherUser = User::factory()->create(['name' => 'Other User']);
 
     actingAs($user);

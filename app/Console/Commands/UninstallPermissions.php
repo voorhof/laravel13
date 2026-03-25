@@ -27,6 +27,9 @@ class UninstallPermissions extends Command
             base_path('database/factories/RoleFactory.php'),
             base_path('database/migrations/0001_01_01_000003_create_permission_tables.php'),
             base_path('database/seeders/PermissionSeeder.php'),
+            base_path('tests/Feature/Filament/FilamentRoleTest.php'),
+            base_path('tests/Feature/Filament/RoleSyncTest.php'),
+            base_path('tests/Unit/RolePolicyTest.php'),
             base_path('tests/Unit/RoleTest.php'),
             base_path('tests/Unit/UserPolicyTest.php'),
         ];

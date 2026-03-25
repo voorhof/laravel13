@@ -25,7 +25,7 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name'; // Used for global search and navigation.
 
-    protected static ?int $navigationSort = 1; // Specify the order in which navigation items are listed.
+    protected static ?int $navigationSort = 10; // Specify the order in which navigation items are listed.
 
     protected static string|UnitEnum|null $navigationGroup = 'Users & Roles';
 
