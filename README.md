@@ -60,6 +60,19 @@ To get started with this starter template, follow these steps:
 
 The User model was given the SoftDeletes trait and the deleted_at timestamp added to its migration file.
 
+## Roles
+
+The application uses the [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission/v7/introduction) package to manage user roles and permissions. The following roles are defined:
+
+- **Super Admin**: Has all permissions, defined by a Gate::before inside the AppServiceProvider.
+- **Admin**: Full crud permissions for users and roles.
+- **Subscriber**: No permissions.
+
+Seeding these roles and permissions is optional. You can run the seeder to populate the database with the default roles and permissions.
+
+- `php artisan db:seed --class=PermissionSeeder`
+- `php artisan migrate:fresh --seed --seeder=PermissionSeeder`
+
 ## Filament
 
 [Filament](https://filamentphp.com/) is installed, and a basic admin panel configured, available at /admin URL.
