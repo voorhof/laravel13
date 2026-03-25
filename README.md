@@ -2,13 +2,14 @@
 
 # Laravel 13 - Starter template
 
-A go-to starter kit for Laravel 13 projects. This includes a **Filament** admin panel, **Chirper** example from the Laravel Bootcamp,... 
+A go-to starter kit for Laravel 13 projects. This includes **Spatie Permission**, a **Filament** admin panel, **Chirper** example from the Laravel Bootcamp,...
 
 All these pre-installed features have default settings, and each component can be removed with extra provided artisan commands.  
 If you wish to remove a component, please do so as early as possible in the development process.
 
 - `php artisan chirper:uninstall`
 - `php artisan filament:uninstall`
+- `php artisan permission:uninstall`
 
 ## Requirements
 
@@ -33,12 +34,12 @@ To get started with this starter template, follow these steps:
    composer run setup
    ```
    This script will:
-   - Install PHP dependencies.
-   - Create your `.env` file from `.env.example`. _(default values have been commented out)_
-   - Generate an application key.
-   - Run database migrations (using SQLite by default).
-   - Install NPM dependencies.
-   - Build frontend assets.  
+    - Install PHP dependencies.
+    - Create your `.env` file from `.env.example`. _(default values have been commented out)_
+    - Generate an application key.
+    - Run database migrations (using SQLite by default).
+    - Install NPM dependencies.
+    - Build frontend assets.
 
 3. **(Optional) Seed the database:**
    To create a default test user (`test@example.com` / `password`):
@@ -59,6 +60,25 @@ To get started with this starter template, follow these steps:
 ## User model
 
 The User model was given the SoftDeletes trait and the deleted_at timestamp added to its migration file.
+
+## Roles
+
+The application uses the [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission/v7/introduction) package to manage user roles and permissions. The following roles are defined:
+
+- **Super Admin**: Has all permissions, defined by a Gate::before inside the AppServiceProvider.
+- **Admin**: Full crud permissions for users and roles.
+- **Subscriber**: No permissions.
+
+Seeding these roles and permissions is optional. You can run the seeder to populate the database with the default roles and permissions.
+
+- `php artisan db:seed --class=PermissionSeeder`
+- `php artisan migrate:fresh --seed --seeder=PermissionSeeder`
+
+If you wish not to use this package, run the following command to remove it:
+
+```bash
+php artisan permission:uninstall
+```
 
 ## Filament
 

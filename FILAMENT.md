@@ -18,6 +18,8 @@ php artisan icons:cache
 php artisan make:filament-resource User --generate --soft-deletes
 ```
 
+You can find the config file at `config/filament.php`.
+
 ## Project Structure
 
 We follow a structured approach for our resources to keep the main resource class clean and manageable.
