@@ -22,7 +22,6 @@ class UninstallPermissions extends Command
             app_path('Models/Permission.php'),
             app_path('Models/Role.php'),
             app_path('Policies/RolePolicy.php'),
-            app_path('Policies/UserPolicy.php'),
             config_path('permission.php'),
             base_path('database/factories/PermissionFactory.php'),
             base_path('database/factories/RoleFactory.php'),
