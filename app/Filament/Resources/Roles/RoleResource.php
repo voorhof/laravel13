@@ -13,7 +13,6 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use UnitEnum;
 
 class RoleResource extends Resource
 {
@@ -25,7 +24,10 @@ class RoleResource extends Resource
 
     protected static ?int $navigationSort = 20; // Specify the order in which navigation items are listed.
 
-    protected static string|UnitEnum|null $navigationGroup = 'Users & Roles';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('User management');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -60,6 +62,16 @@ class RoleResource extends Resource
 
     public static function getNavigationBadgeTooltip(): ?string
     {
-        return 'The number of roles';
+        return __('The number of roles');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Role');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Roles');
     }
 }

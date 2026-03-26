@@ -14,6 +14,7 @@ class RoleForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required()
                     ->unique()
                     ->maxLength(64)
@@ -22,11 +23,13 @@ class RoleForm
                         return $operation === Operation::Create->value;
                     }),
                 TextInput::make('guard_name')
+                    ->label(__('Guard'))
                     ->required()
                     ->maxLength(64)
                     ->default('web')
                     ->disabled(),
                 CheckboxList::make('permissions')
+                    ->label(__('Permissions'))
                     ->relationship(titleAttribute: 'name')
                     ->columns()
                     ->searchable()->bulkToggleable(),
