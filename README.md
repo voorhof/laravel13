@@ -13,7 +13,7 @@ If you wish to remove a component, please do so as early as possible in the deve
 
 ## Requirements
 
-- **PHP** 8.3+
+- **PHP** 8.4+
 - **Composer**
 - **Node.js** & **NPM**
 - **[Laravel Herd](https://herd.laravel.com)** (Recommended)
