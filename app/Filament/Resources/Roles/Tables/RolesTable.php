@@ -15,14 +15,18 @@ class RolesTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 TextColumn::make('guard_name')
+                    ->label(__('Guard'))
                     ->searchable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Filament\Auth\Pages\Login;
 use Filament\Facades\Filament;
+use Filament\Pages\Dashboard;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
@@ -42,13 +43,13 @@ it('can access the admin dashboard when authenticated', function () {
     actingAs($user)
         ->get('/admin')
         ->assertSuccessful()
-        ->assertSee('Dashboard');
+        ->assertSeeLivewire(Dashboard::class);
 });
 
 it('can load the login page', function () {
     get('/admin/login')
         ->assertSuccessful()
-        ->assertSee('Sign in');
+        ->assertSeeLivewire(Login::class);
 });
 
 it('can login through the admin panel login page', function () {

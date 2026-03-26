@@ -14,6 +14,7 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required()
                     ->maxLength(255)
                     ->autofocus(function ($operation): bool {
@@ -21,13 +22,14 @@ class UserForm
                         return $operation === Operation::Create->value;
                     }),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label(__('Email'))
                     ->email()
                     ->unique()
                     ->required()
                     ->maxLength(255)
                     ->autocomplete(false),
                 TextInput::make('password')
+                    ->label(__('Password'))
                     ->password()
                     ->required()
                     ->maxLength(255)
@@ -35,7 +37,7 @@ class UserForm
                     ->autocomplete('new-password'),
                 Select::make('roles')
                     ->relationship('roles', 'name')
-                    ->label('Choose role')
+                    ->label(__('Choose role'))
                     ->disableOptionWhen(fn (string $label): bool => $label === 'Super Admin')
                     ->visible(fn (): bool => auth()->check() && auth()->user()->can('update roles')),
             ]);

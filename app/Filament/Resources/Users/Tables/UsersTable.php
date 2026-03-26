@@ -22,15 +22,17 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label(__('Email'))
                     ->searchable(),
                 TextColumn::make('email_verified_at')
+                    ->label(__('Email verified at'))
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('roles.name')
-                    ->label('Role')
+                    ->label(__('Role'))
                     ->badge()
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         return $query->orderBy(
@@ -43,20 +45,24 @@ class UsersTable
                         );
                     }),
                 TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
+                    ->label(__('Deleted at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('verified users')
+                    ->label(__('Verified users'))
                     ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
                 TrashedFilter::make(),
             ])

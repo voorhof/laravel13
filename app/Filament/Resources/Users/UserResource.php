@@ -15,7 +15,6 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use UnitEnum;
 
 class UserResource extends Resource
 {
@@ -27,7 +26,10 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 10; // Specify the order in which navigation items are listed.
 
-    protected static string|UnitEnum|null $navigationGroup = 'Users & Roles';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('User management');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -62,7 +64,7 @@ class UserResource extends Resource
 
     public static function getNavigationBadgeTooltip(): ?string
     {
-        return 'The number of users';
+        return __('The number of users');
     }
 
     public static function getRecordRouteBindingEloquentQuery(): Builder
@@ -71,5 +73,15 @@ class UserResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('User');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Users');
     }
 }
