@@ -35,6 +35,16 @@ class UninstallFilament extends Command
         $directoriesToDelete = [
             app_path('Filament'),
             app_path('Providers/Filament'),
+            base_path('lang/vendor/filament'),
+            base_path('lang/vendor/filament-actions'),
+            base_path('lang/vendor/filament-forms'),
+            base_path('lang/vendor/filament-infolists'),
+            base_path('lang/vendor/filament-notifications'),
+            base_path('lang/vendor/filament-panels'),
+            base_path('lang/vendor/filament-query-builder'),
+            base_path('lang/vendor/filament-schemas'),
+            base_path('lang/vendor/filament-tables'),
+            base_path('lang/vendor/filament-widgets'),
             public_path('css/filament'),
             public_path('fonts/filament'),
             public_path('js/filament'),
@@ -94,7 +104,15 @@ class UninstallFilament extends Command
             $newContent = preg_replace("/\s+App\\\\Providers\\\\Filament\\\\AdminPanelProvider::class,/", '', $content);
             if ($newContent !== $content) {
                 file_put_contents($providersPhp, $newContent);
-                $this->line('Removed reference from bootstrap/providers.php');
+                $this->line('Removed Panel reference from bootstrap/providers.php');
+            }
+        }
+        if (file_exists($providersPhp)) {
+            $content = file_get_contents($providersPhp);
+            $newContent = preg_replace("/\s+App\\\\Providers\\\\Filament\\\\UiServiceProvider::class,/", '', $content);
+            if ($newContent !== $content) {
+                file_put_contents($providersPhp, $newContent);
+                $this->line('Removed UI reference from bootstrap/providers.php');
             }
         }
 
@@ -106,7 +124,7 @@ class UninstallFilament extends Command
             $newContent = preg_replace("/\s+\"@php artisan filament:upgrade\",?/", '', $content);
             $newContent = preg_replace("/\s+\"@php artisan icons:cache\",?/", '', $newContent);
 
-            // Clean up potentially dangling comma if filament:upgrade or icons:cache were at the end of the scripts array
+            // Clean up potentially dangling comma if filament:upgrade or icons:cache were at the end of the script array
             $newContent = preg_replace('/",\s+]/', "\"\n        ]", $newContent);
 
             if ($newContent !== $content) {

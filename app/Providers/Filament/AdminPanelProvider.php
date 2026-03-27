@@ -27,10 +27,25 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->unsavedChangesAlerts()
+            ->databaseTransactions()
+//            ->databaseNotifications()
+//            ->strictAuthorization()
+//            ->profile(EditProfile::class, isSimple: false)
             ->login()
 //            ->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->emailChangeVerification()
+//            ->brandLogo(asset('images/xxx.png'))
+//            ->darkModeBrandLogo(asset('images/xxx-dark.png'))
+//            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->sidebarWidth('16rem')
             ->colors([
                 'primary' => Color::Amber,
+                //                'primary' => Color::convertToOklch('#4397cb'),
+                //                'gray' => Color::Slate,
+                //                'info' => Color::Violet,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -55,6 +70,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                // EnsureEmailIsVerified::class, // todo: check ==== ->emailVerification() ?
+                // CheckAdminAccess::class, // ToDO: create can Acces Panel permission middleware?? => or put in User model?
             ]);
     }
 }
