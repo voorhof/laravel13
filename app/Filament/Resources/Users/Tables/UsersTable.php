@@ -22,15 +22,12 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Name'))
-                    ->searchable(),
+                    ->label(__('Name')),
                 TextColumn::make('email')
-                    ->label(__('Email'))
-                    ->searchable(),
+                    ->label(__('Email')),
                 TextColumn::make('email_verified_at')
                     ->label(__('Email verified at'))
-                    ->dateTime()
-                    ->sortable(),
+                    ->dateTime(),
                 TextColumn::make('roles.name')
                     ->label(__('Role'))
                     ->badge()
@@ -47,17 +44,14 @@ class UsersTable
                 TextColumn::make('created_at')
                     ->label(__('Created at'))
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label(__('Updated at'))
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->label(__('Deleted at'))
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
